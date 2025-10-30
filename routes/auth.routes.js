@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
       );
       console.log("does password match?", doesPasswordMatch);
       if (doesPasswordMatch) {
-        const payLoad = { _id: foundUser._id };
+        const payLoad = { _id: foundUser._id, username: foundUser.username };
         const authToken = jwt.sign(payLoad, process.env.TOKEN_SECRET, {
           algorithm: "HS256",
           expiresIn: "6h",
