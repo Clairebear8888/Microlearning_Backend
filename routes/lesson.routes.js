@@ -123,40 +123,40 @@ router.post("/generate", isAuthenticated, async (req, res) => {
       error: err.message,
     });
   }
+});
 
-  // manually update a lesson
-  router.put("/update/:lessonId", isAuthenticated, async (req, res) => {
-    try {
-      const { lessonId } = req.params;
-      const updatedLesson = await LessonModel.findByIdAndUpdate(
-        lessonId,
-        req.body,
-        { new: true }
-      );
-      if (!updatedLesson)
-        return res.status(404).json({ message: "Lesson not found" });
-      res.status(200).json(updatedLesson);
-    } catch (err) {
-      res
-        .status(500)
-        .json({ message: "Error updating lesson", error: err.message });
-    }
-  });
+// manually update a lesson
+router.put("/:lessonId", isAuthenticated, async (req, res) => {
+  try {
+    const { lessonId } = req.params;
+    const updatedLesson = await LessonModel.findByIdAndUpdate(
+      lessonId,
+      req.body,
+      { new: true }
+    );
+    if (!updatedLesson)
+      return res.status(404).json({ message: "Lesson not found" });
+    res.status(200).json(updatedLesson);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error updating lesson", error: err.message });
+  }
+});
 
-  //  DELETE a lesson
-  router.delete("/:lessonId", isAuthenticated, async (req, res) => {
-    try {
-      const { lessonId } = req.params;
-      const deletedLesson = await LessonModel.findByIdAndDelete(lessonId);
-      if (!deletedLesson)
-        return res.status(404).json({ message: "Lesson not found" });
-      res.status(200).json({ message: "Lesson deleted successfully" });
-    } catch (err) {
-      res
-        .status(500)
-        .json({ message: "Error deleting lesson", error: err.message });
-    }
-  });
+//  DELETE a lesson
+router.delete("/:lessonId", isAuthenticated, async (req, res) => {
+  try {
+    const { lessonId } = req.params;
+    const deletedLesson = await LessonModel.findByIdAndDelete(lessonId);
+    if (!deletedLesson)
+      return res.status(404).json({ message: "Lesson not found" });
+    res.status(200).json({ message: "Lesson deleted successfully" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error deleting lesson", error: err.message });
+  }
 });
 
 module.exports = router;
